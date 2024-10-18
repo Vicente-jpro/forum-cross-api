@@ -1,0 +1,42 @@
+server:
+  port: 8080
+  #servlet:
+    #context-path: /api
+cors:
+  originPatterns: http://localhost:3000,http://localhost:8080,https://angola.demo.ao
+file:
+  upload-dir: /Code/UploadDir
+security:
+  jwt:
+    token:
+      secret-key: 53cr37
+      expire-length: 3600000
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/forum-cross-api
+    username: postgres
+    password: vicente0301
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect    
+    show-sql: false
+
+  flyway:
+    baseline-on-migrate: true
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-file-size: 200MB
+      max-request-size: 215MB
+mvc:
+  pathmatch:
+    matching-strategy: ANT_PATH_MATCHER
+
+springdoc:
+  pathsToMatch:
+    - /auth/**
+    - /api/**/v1/**
+  swagger-ui:
+    use-root-path: true
