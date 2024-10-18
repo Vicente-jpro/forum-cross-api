@@ -7,12 +7,17 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ao.angola.demo.dto.AccountCredentialsVO;
 import ao.angola.demo.dto.TokenVO;
+import ao.angola.demo.exceptions.UserException;
+import ao.angola.demo.model.User;
 import ao.angola.demo.repositories.UserRepository;
 import ao.angola.demo.security.jwt.JwtTokenProvider;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class AuthServices {
 
@@ -23,7 +28,8 @@ public class AuthServices {
 	private JwtTokenProvider tokenProvider;
 	
 	@Autowired
-	private UserRepository repository;
+	private UserRepository userRepository;
+	
 	
 	@SuppressWarnings("rawtypes")
 	public ResponseEntity signin(AccountCredentialsVO data) {
@@ -33,7 +39,7 @@ public class AuthServices {
 			authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(username, password));
 			
-			var user = repository.findByUsername(username);
+			var user = userRepository.findByUsername(username);
 			
 			var tokenResponse = new TokenVO();
 			if (user != null) {
@@ -49,7 +55,7 @@ public class AuthServices {
 	
 	@SuppressWarnings("rawtypes")
 	public ResponseEntity refreshToken(String username, String refreshToken) {
-		var user = repository.findByUsername(username);
+		var user = userRepository.findByUsername(username);
 		
 		var tokenResponse = new TokenVO();
 		if (user != null) {
@@ -59,4 +65,18 @@ public class AuthServices {
 		}
 		return ResponseEntity.ok(tokenResponse);
 	}
+	
+    @Transactional
+    public User salvar(User usuario){
+    	log.info("Salvando o usuario...");
+    	
+    	
+    	try {
+    		return userRepository.save(usuario);
+		} catch (Exception e) {
+			log.error("Email ja esta registado...");
+			throw new UserException("Email ja esta registado.");
+		}
+    	
+    }
 }

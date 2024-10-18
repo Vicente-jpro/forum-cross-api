@@ -56,10 +56,14 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                     authorizeHttpRequests -> authorizeHttpRequests
                         .requestMatchers(
+                        	"/auth/new",
 							"/auth/signin",
 							"/auth/refresh/**",
                     		"/swagger-ui/**",
-                    		"/v3/api-docs/**"
+                    		"/api-docs/swagger-config",
+                    		"/swagger-ui/login",
+                    		"/v3/api-docs/**",
+                    		"/hello"
                 		).permitAll()
                         .requestMatchers("/api/**").authenticated()
                         .requestMatchers("/users").denyAll()
@@ -71,6 +75,7 @@ public class SecurityConfig {
                 .build();
  
     }
+    
     
     
 }

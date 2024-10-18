@@ -66,6 +66,10 @@ public class User implements UserDetails, Serializable {
 		return roles;
 	}
 
+	public boolean isPasswordEquals(String password, String passwordConfirmed){
+		return password.equalsIgnoreCase(passwordConfirmed);
+	}
+	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return this.permissions;

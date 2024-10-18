@@ -14,6 +14,7 @@ import ao.angola.demo.exceptions.ExceptionResponse;
 import ao.angola.demo.exceptions.InvalidJwtAuthenticationException;
 import ao.angola.demo.exceptions.RequiredObjectIsNullException;
 import ao.angola.demo.exceptions.ResourceNotFoundException;
+import ao.angola.demo.exceptions.UserException;
 
 @ControllerAdvice
 @RestController
@@ -66,5 +67,17 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 		
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.FORBIDDEN);
 	}
+	@ExceptionHandler(UserException.class)
+	public final ResponseEntity<ExceptionResponse> handleUserExcepions(
+			Exception ex, WebRequest request) {
+		
+		ExceptionResponse exceptionResponse = new ExceptionResponse(
+				new Date(),
+				ex.getMessage(),
+				request.getDescription(false));
+		
+		return new ResponseEntity<>(exceptionResponse, HttpStatus.FORBIDDEN);
+	}
+
 
 }
