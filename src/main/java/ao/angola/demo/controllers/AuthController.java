@@ -68,15 +68,16 @@ public class AuthController {
     @PostMapping(path="/new", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@Operation(summary = "Save a user and send email to confirm account.")
     @ResponseStatus(HttpStatus.CREATED)
-    public UserResponseDTO save( @RequestBody @Valid UserDTO userDTO ) {
+    public UserResponseDTO save( @RequestBody UserDTO userDTO ) {
     	 User user = new User();
+    	 user = modelMapper.map(userDTO, User.class);
     	 
     	boolean isPasswordEqual = user.isPasswordEquals(userDTO.getPassword(), userDTO.getConfirmedPassword());
         
     	if(isPasswordEqual) {
 	    	String senhaCriptografada = passwordEncoder.encode(userDTO.getPassword());
 	        
-	        userDTO.setPassword(senhaCriptografada);
+	    	user.setPassword(senhaCriptografada);
 	        
 	        User userSaved = new User();
 	     

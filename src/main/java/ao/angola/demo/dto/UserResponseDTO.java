@@ -2,6 +2,8 @@ package ao.angola.demo.dto;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,12 +12,20 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserResponseDTO {
-
-	private Long id;
-	private String userName;	
-	private String fullName;
-	private Boolean enabled = false;
-	private List<PermissionDTO> permissions;
 	
+	@JsonProperty("id")
+	private Long id;
+	
+	@JsonProperty("user_name")
+	private String userName;
+	
+	@JsonProperty("full_name")
+	private String fullName;
+	
+	@JsonProperty("enabled")
+	private Boolean enabled = false;
+	
+	@JsonProperty("permissions")
+	private List<PermissionDTO> permissions;
 	
 }
