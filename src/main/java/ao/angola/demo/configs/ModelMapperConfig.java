@@ -1,4 +1,4 @@
-package ao.angola.demo.config;
+package ao.angola.demo.configs;
 
 
 import org.modelmapper.ModelMapper;

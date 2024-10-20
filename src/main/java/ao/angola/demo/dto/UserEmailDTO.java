@@ -11,14 +11,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserResponseDTO {
-    
-	@JsonProperty("id")
-	private Integer id;
+public class UserEmailDTO {
 	
-	@JsonProperty("name")
-    private String name;
-
 	@JsonProperty("email")
-    private String email;
+	private String email; 
 }

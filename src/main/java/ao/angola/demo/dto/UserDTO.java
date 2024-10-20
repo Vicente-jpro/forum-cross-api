@@ -1,38 +1,33 @@
 package ao.angola.demo.dto;
 
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class UserDTO {
-
+    
 	@JsonProperty("id")
-	private Long id;
+	private Integer id;
 	
-	@JsonProperty("user_name")
-	private String userName;
-	
-	@JsonProperty("full_name")
-	private String fullName;
+	@JsonProperty("name")
+    private String name;
+
+	@JsonProperty("email")
+    private String email;
 	
 	@JsonProperty("password")
-	private String password;
+    private String password;
 	
-	@JsonProperty("confirmed_password")
-	private String confirmedPassword;
+	@JsonProperty("password_confirmed")
+    private String passwordConfirmed;
 	
-	@JsonProperty("enabled")
-	private Boolean enabled = false;
-	
-	@JsonProperty("permissions")
-	private List<PermissionDTO> permissions;
-	
-	
+	@JsonProperty("admin")
+    private boolean admin;
 }

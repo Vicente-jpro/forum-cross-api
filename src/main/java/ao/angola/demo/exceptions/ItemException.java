@@ -1,10 +1,11 @@
 package ao.angola.demo.exceptions;
 
-public class UserException extends RuntimeException{
-
+public class ItemException extends RuntimeException{
+	
 	private static final long serialVersionUID = 1L;
-
-	public UserException(String errorMessage) {
+	
+	public ItemException(String errorMessage){
 		super(errorMessage);
 	}
+
 }
