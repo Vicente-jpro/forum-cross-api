@@ -26,5 +26,5 @@ public class Comentario {
 	
 	@ManyToOne
 	@JoinColumn( name = "user_id")
-	private UserModel userModel;
+	private UserModel user;
 }
