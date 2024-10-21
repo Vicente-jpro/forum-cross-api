@@ -25,7 +25,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "usuarios")
+@Table(name = "users")
 public class UserModel implements Serializable {
 
     @Id
@@ -60,7 +60,11 @@ public class UserModel implements Serializable {
     
     @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Order> orders = new ArrayList<>();
+    private List<Post> posts = new ArrayList<>();
+    
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Comentario> comentarios = new ArrayList<>();
     
     
     public boolean isTokenEquals(String token1, String token2) {

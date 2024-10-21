@@ -7,16 +7,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonPropertyOrder({"id", "morada1", "morada2", "telemovel1", "telemovel2", "municipio"})
-public class EnderecoDto extends RepresentationModel<EnderecoDto>{
+public class PerfilDTO extends RepresentationModel<PerfilDTO>{
 
 	@JsonProperty("id")
 	private Long id;

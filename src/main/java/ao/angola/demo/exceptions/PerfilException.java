@@ -1,10 +1,10 @@
 package ao.angola.demo.exceptions;
 
-public class EnderecoException extends RuntimeException{
+public class PerfilException extends RuntimeException{
 
 	private static final long serialVersionUID = 1L;
 	
-	public EnderecoException(String errorMessage) {
+	public PerfilException(String errorMessage) {
 		super(errorMessage);
 	}
 
