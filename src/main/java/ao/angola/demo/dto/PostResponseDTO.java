@@ -9,10 +9,12 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import ao.angola.demo.entities.Comentario;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonPropertyOrder({"id", "titulo", "descricao", "approved", "user", "comentarios"})
@@ -36,5 +38,5 @@ public class PostResponseDTO {
 	private UserResponseDTO user;
 	
 	@JsonProperty("comentarios")
-	private List<Comentario> comentarios = new ArrayList<Comentario>();
+	private List<ComentarioDTO> comentarios = new ArrayList<ComentarioDTO>();
 }

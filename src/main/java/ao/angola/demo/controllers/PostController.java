@@ -1,6 +1,7 @@
 package ao.angola.demo.controllers;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -12,12 +13,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import ao.angola.demo.dto.ComentarioDTO;
 import ao.angola.demo.dto.PostDTO;
 import ao.angola.demo.dto.PostResponseDTO;
+import ao.angola.demo.dto.UserResponseDTO;
 import ao.angola.demo.entities.Post;
 import ao.angola.demo.entities.UserModel;
 import ao.angola.demo.service.PostService;
@@ -102,22 +104,47 @@ public class PostController {
 	}
 	
 	
-	@GetMapping("/upproved")
+	@GetMapping("/approved")
 	@ResponseStatus(HttpStatus.OK)
-	public List<Post> findByApprovedTrue(){
-		return postService.findByApprovedTrue();
+	public List<PostResponseDTO> findByApprovedTrue(){
+		
+		return postService.findByApprovedTrue()
+				  .stream()
+				  .map(post -> {
+					 
+					  PostResponseDTO postResponseDTO = 
+							  modelMapper.map(post, PostResponseDTO.class);
+					  return postResponseDTO;
+				  }).collect(Collectors.toList());
+
 	}
 	
-	@GetMapping("/unpproved")
+	@GetMapping("/unapproved")
 	@ResponseStatus(HttpStatus.OK)
-	public List<Post> findByApprovedFalse(){
-		return postService.findByApprovedFalse();
+	public List<PostResponseDTO> findByApprovedFalse(){
+		return postService.findByApprovedFalse()
+		  .stream()
+		  .map(post -> {
+	
+			  PostResponseDTO postResponseDTO = 
+					  modelMapper.map(post, PostResponseDTO.class);
+			  return postResponseDTO;
+		  }).collect(Collectors.toList());
+
 	}
 	
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
-	public List<Post> findAll(){
-		return postService.findAll();
+	public List<PostResponseDTO> findAll(){
+		return postService.findAll()
+						  .stream()
+						  .map(post -> {
+
+							  PostResponseDTO postResponseDTO = 
+									  modelMapper.map(post, PostResponseDTO.class);
+							  return postResponseDTO;
+						  }).collect(Collectors.toList());
+	
 	}
 	
 
