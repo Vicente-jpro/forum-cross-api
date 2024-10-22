@@ -30,6 +30,7 @@ public class ComentarioService {
 		return salvar(novoComentario);
 		
 	}
+
 	
 	public Comentario salvar(Comentario comentario) {
 		log.info("Salvando comentario...");

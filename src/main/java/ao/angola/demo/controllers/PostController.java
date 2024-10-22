@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ao.angola.demo.dto.ComentarioDTO;
 import ao.angola.demo.dto.PostDTO;
 import ao.angola.demo.dto.PostResponseDTO;
-import ao.angola.demo.dto.UserResponseDTO;
+import ao.angola.demo.entities.Comentario;
 import ao.angola.demo.entities.Post;
 import ao.angola.demo.entities.UserModel;
 import ao.angola.demo.service.PostService;
@@ -103,6 +103,21 @@ public class PostController {
 
 	}
 	
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.OK)
+	public List<PostResponseDTO> findAll(){
+		
+		return postService.findAll()
+				  .stream()
+				  .map(post -> {
+					 
+					  PostResponseDTO postResponseDTO = 
+							  modelMapper.map(post, PostResponseDTO.class);
+					  return postResponseDTO;
+				  }).collect(Collectors.toList());
+	
+	}
+	
 	
 	@GetMapping("/approved")
 	@ResponseStatus(HttpStatus.OK)
@@ -133,19 +148,39 @@ public class PostController {
 
 	}
 	
-	@GetMapping
-	@ResponseStatus(HttpStatus.OK)
-	public List<PostResponseDTO> findAll(){
-		return postService.findAll()
-						  .stream()
-						  .map(post -> {
-
-							  PostResponseDTO postResponseDTO = 
-									  modelMapper.map(post, PostResponseDTO.class);
-							  return postResponseDTO;
-						  }).collect(Collectors.toList());
-	
+	@PostMapping(value = "/{id_post}/comentarios", produces = MediaType.APPLICATION_JSON_VALUE, 
+			consumes = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.CREATED)
+	public PostResponseDTO comentar(@RequestBody ComentarioDTO comentarioDTO, 
+			@PathVariable("id_post") Long idPost, @LoggedInUser CurrentUser currentUser){
+		
+		Comentario comentario = modelMapper.map(comentarioDTO, Comentario.class);
+		comentario.setUser(currentUser.getUser());
+		
+		Post post = this.postService.comentar(comentario, idPost);
+		PostResponseDTO responseDTO = modelMapper.map(post, PostResponseDTO.class);
+		
+		return responseDTO;
+		
 	}
 	
+	@PatchMapping(value = "/{id_post}/comentarios/{id_comentario}", produces = MediaType.APPLICATION_JSON_VALUE, 
+			consumes = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.CREATED)
+	public PostResponseDTO atualizarCometario(@RequestBody ComentarioDTO comentarioDTO, 
+			@PathVariable("id_post") Long idPost, 
+			@PathVariable("id_comentario") Long idComentario,
+			@LoggedInUser CurrentUser currentUser){
+		
+		Comentario comentario = modelMapper.map(comentarioDTO, Comentario.class);
+		comentario.setUser(currentUser.getUser());
+		comentario.setId(idComentario);
+		
+		Post post = this.postService.atualizarComentario(comentario, idPost);
+		PostResponseDTO responseDTO = modelMapper.map(post, PostResponseDTO.class);
+		
+		return responseDTO;
+		
+	}
 
 }

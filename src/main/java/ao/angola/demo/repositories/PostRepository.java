@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import ao.angola.demo.entities.Post;
@@ -11,15 +12,15 @@ import ao.angola.demo.entities.UserModel;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long>{
-
+	
 	@Query(value = "select users.id as id_user, comentarios.id as id_comentario, p.* from posts p"
 			+ "	inner join users "
 			+ "	on users.id = p.user_id "
 			+ "	left join comentarios "
-			+ "	on comentarios.user_id = users.id ", 
+			+ "	on comentarios.user_id = users.id "
+			+ " where comentarios.id = :idComentario and p.id = :idPost ", 
 			nativeQuery = true)
-	List<Post> findAllPosts();
-	
+	Post findByIdAndCommentId( @Param("idComentario") Long idComentario, @Param("idPost")  Long idPost);
 	Post findByIdAndUser(Long idPost, UserModel user);
 	List<Post> findByApprovedTrue();
 	List<Post> findByApprovedFalse();

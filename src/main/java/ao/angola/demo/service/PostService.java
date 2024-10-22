@@ -1,11 +1,13 @@
 package ao.angola.demo.service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
+import ao.angola.demo.entities.Comentario;
 import ao.angola.demo.entities.Post;
 import ao.angola.demo.entities.UserModel;
 import ao.angola.demo.exceptions.PostException;
@@ -19,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 public class PostService {
 
 	private final PostRepository postRepository;
-	private final ModelMapper modelMapper;
+	private final ComentarioService comentarioService;
 	
 	public Post salvar(Post post) {
 		log.info("Salvando Post...");
@@ -54,16 +56,28 @@ public class PostService {
 		return post;
 	}
 	
-	public Post comentar(Post post) {
-		log.info("Adicionando comentario no post: {} ", post.getId() );
-		Post pt = findById(post.getId());
+	public Post comentar(Comentario comentario, Long idPost) {
+		log.info("Adicionando comentario no post: {} ", idPost );
 		
-		post.getComentarios()
-			.stream()
-			.forEach( p -> pt.getComentarios().add(p));
+		Post postSalvo = findById(idPost);
+		postSalvo.getComentarios().add(comentario);
 		
-		return salvar(post);
+		return salvar(postSalvo);
 		
+	}
+	
+	public Post atualizarComentario(Comentario comentario, Long idPost) {
+		
+		//Colocar exception aqui findByIdAndCommentId
+		Post post = postRepository.findByIdAndCommentId(comentario.getId(), idPost);
+		
+		Comentario coment = post.getComentarios().get(0);
+		coment.setComentario(comentario.getComentario());
+		
+		Comentario cometario = comentarioService.atualizar(coment, comentario.getId());
+		List<Comentario> comentarios = Arrays.asList(cometario) ;
+		post.setComentarios(comentarios);
+		return post;
 	}
 	
 	
@@ -85,7 +99,7 @@ public class PostService {
 	
 	public List<Post> findAll(){
 		log.info("Buscando todos os posts...");
-		return postRepository.findAllPosts();
+		return postRepository.findAll();
 	}
 	
 	

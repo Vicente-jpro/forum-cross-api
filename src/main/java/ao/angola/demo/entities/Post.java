@@ -56,7 +56,6 @@ public class Post {
 	@JoinTable(name = "post_comentarios",
 	joinColumns = @JoinColumn(name = "post_id"),
     inverseJoinColumns = @JoinColumn(name = "comentario_id"))
-	 @Fetch(FetchMode.SUBSELECT)
 	private List<Comentario> comentarios = new ArrayList<Comentario>();
 	
 	
