@@ -9,18 +9,17 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import ao.angola.demo.exceptions.ItemException;
-import ao.angola.demo.exceptions.OrderException;
-import ao.angola.demo.exceptions.StockMovementException;
+import ao.angola.demo.exceptions.ComentarioException;
+import ao.angola.demo.exceptions.PostException;
 import ao.angola.demo.exceptions.UsuarioException;
 import ao.angola.demo.util.ApiErrors;
 
 @RestControllerAdvice
 public class ApplicationControllerAdvice {
 
-    @ExceptionHandler(ItemException.class)
+    @ExceptionHandler(PostException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiErrors handleItemExceptionException(ItemException ex){
+    public ApiErrors handlePostException(PostException ex){
         String mensagemErro = ex.getMessage();
         return new ApiErrors(mensagemErro);
     }
@@ -31,17 +30,11 @@ public class ApplicationControllerAdvice {
         return new ApiErrors(ex.getMessage());
     }
     
-    @ExceptionHandler(StockMovementException.class)
+    @ExceptionHandler(ComentarioException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ApiErrors handleStockMovementException( StockMovementException ex ){
+    public ApiErrors handleComentarioException( ComentarioException ex ){
         return new ApiErrors(ex.getMessage());
     }
-    
-    @ExceptionHandler(OrderException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ApiErrors handleStockMovementException( OrderException ex ){
-        return new ApiErrors(ex.getMessage());
-    }  
     
     @ExceptionHandler(NumberFormatException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)

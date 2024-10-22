@@ -1,10 +1,10 @@
 package ao.angola.demo.exceptions;
 
-public class ClienteException extends RuntimeException{
+public class PostException extends RuntimeException{
 
 	private static final long serialVersionUID = 1L;
 	
-	public ClienteException(String errorMessage) {
+	public PostException(String errorMessage) {
 		super(errorMessage);
 	}
 

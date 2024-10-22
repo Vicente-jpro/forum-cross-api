@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import ao.angola.demo.entities.Comentario;
 
 @Repository
-public interface CometarioRepository extends JpaRepository<Comentario, Long>{
+public interface ComentarioRepository extends JpaRepository<Comentario, Long>{
 
 }

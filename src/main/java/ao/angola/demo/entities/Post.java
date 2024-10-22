@@ -13,13 +13,16 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Builder
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Table
 @Entity(name = "posts")
 public class Post {
@@ -28,7 +31,7 @@ public class Post {
 	@Column(name = "id")
 	private Long id;
 	
-	@Column(name = "titulo")
+	@Column(name = "titulo", unique = true, updatable = true)
 	private String titulo;
 	
 	@Column(name = "descricao")
@@ -44,5 +47,6 @@ public class Post {
 	joinColumns = @JoinColumn(name = "post_id"),
     inverseJoinColumns = @JoinColumn(name = "comentario_id"))
 	private List<Comentario> comentarios = new ArrayList<Comentario>();
+	
 	
 }

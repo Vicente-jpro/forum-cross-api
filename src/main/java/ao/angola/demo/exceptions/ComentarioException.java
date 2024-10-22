@@ -1,11 +1,11 @@
 package ao.angola.demo.exceptions;
 
-public class ItemException extends RuntimeException{
-	
+public class ComentarioException extends RuntimeException{
+
 	private static final long serialVersionUID = 1L;
-	
-	public ItemException(String errorMessage){
+
+	public ComentarioException(String errorMessage) {
 		super(errorMessage);
 	}
-
+	
 }
