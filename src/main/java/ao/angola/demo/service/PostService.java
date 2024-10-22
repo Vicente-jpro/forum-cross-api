@@ -26,7 +26,7 @@ public class PostService {
 		return this.postRepository.save(post);
 	}
 	
-	public Post Post(Post post, Long idPost) {
+	public Post atualizar(Post post, Long idPost) {
 		Post p = findById(idPost);
 		post.setId(idPost);
 		return salvar(post);
@@ -49,7 +49,7 @@ public class PostService {
 		
 		if (post == null ) {
 			log.error("Post nao exite ou pertence a outro usuario: {} / ", idPost);
-			throw new PostException("Post nao existe.");
+			throw new PostException("Post nao exite ou pertence a outro usuario.");
 		}
 		return post;
 	}
@@ -71,6 +71,21 @@ public class PostService {
 		log.info("Eliminado o post...");
 		Post p = findById(idPost);
 		this.postRepository.delete(p);
+	}
+	
+	public List<Post> findByApprovedTrue(){
+		log.info("Buscando todos os posts aprovados...");
+		return postRepository.findByApprovedTrue();
+	}
+	
+	public List<Post> findByApprovedFalse(){
+		log.info("Buscando todos os posts nao aprovados...");
+		return postRepository.findByApprovedFalse();
+	}
+	
+	public List<Post> findAll(){
+		log.info("Buscando todos os posts...");
+		return postRepository.findAllPosts();
 	}
 	
 	

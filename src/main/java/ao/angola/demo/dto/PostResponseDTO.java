@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonPropertyOrder({"id", "titulo", "descricao", "user", "comentarios"})
+@JsonPropertyOrder({"id", "titulo", "descricao", "approved", "user", "comentarios"})
 public class PostResponseDTO {
 
 	@JsonProperty("id")
@@ -28,6 +28,9 @@ public class PostResponseDTO {
 	@NotBlank(message = "Campo titulo descricao.")
 	@JsonProperty("descricao")
 	private String descricao;
+	
+	@JsonProperty("approved")
+	private boolean approved;
 	
 	@JsonProperty("user")
 	private UserResponseDTO user;

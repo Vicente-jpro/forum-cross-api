@@ -3,6 +3,8 @@ package ao.angola.demo.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -37,11 +39,15 @@ public class Post {
 	@Column(name = "descricao")
 	private String descricao;
 	
+	@Column(name = "approved")
+	private boolean approved;
+	
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private UserModel user;
 	
 	//@OrderBy("id")
+	@JsonIgnore
 	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(name = "post_comentarios",
 	joinColumns = @JoinColumn(name = "post_id"),
