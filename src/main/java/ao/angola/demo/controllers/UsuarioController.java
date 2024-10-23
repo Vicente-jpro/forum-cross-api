@@ -3,6 +3,7 @@ package ao.angola.demo.controllers;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -37,7 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 @RequiredArgsConstructor
 public class UsuarioController {
 
@@ -62,7 +63,7 @@ public class UsuarioController {
     	@ApiResponse( code = 401, message = "")
     })
     */
-    @PostMapping(produces = "application/json", consumes = "application/json")
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public UserResponseDTO save( @RequestBody @Valid UserDTO userDTO ) throws MessagingException{
     	 UserModel user = new UserModel();
@@ -102,7 +103,7 @@ public class UsuarioController {
     	@ApiResponse( code = 201, message = "User saved sussefully."),
     	@ApiResponse( code = 401, message = "")
     }) */
-    @PostMapping(path="/account/confirmed/resend", consumes = "application/json")
+    @PostMapping(path="/account/confirmed/resend", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public void accountConfirmedResend( @RequestBody UserEmailDTO userEmail ) throws MessagingException{
     
@@ -151,7 +152,8 @@ public class UsuarioController {
     	@ApiResponse( code = 401, message = "Can invalide credential or you need to verificate your account to access.")
     })
     */
-    @PostMapping(path ="/auth", produces = "application/json", consumes = "application/json")
+    @PostMapping(path ="/auth", produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
     public TokenDTO autenticar(@RequestBody CredenciaisDTO credenciais){
         try{
             
@@ -174,7 +176,7 @@ public class UsuarioController {
     	@ApiResponse( code = 401, message = "Cannot send the email instructions to create a new password.")
     })
     */
-    @PostMapping(path = "/password/new", consumes = "application/json")
+    @PostMapping(path = "/password/new", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void passowrdNew(@RequestBody UserEmailDTO userEmail) throws MessagingException{
         try{
             
@@ -208,7 +210,7 @@ public class UsuarioController {
     	@ApiResponse( code = 401, message = "Cannot send the email instructions to create a new password.")
     })
     */
-    @PostMapping(path ="/password/reset", consumes = "application/json")
+    @PostMapping(path ="/password/reset", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void passowrdReset(@RequestBody UserPasswordRestDTO userPasswordRestDTO, @RequestParam("token") String token){
     
     	UserModel user = this.usuarioService.findByTokenResetPassword(token);

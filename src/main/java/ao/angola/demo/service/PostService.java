@@ -70,7 +70,10 @@ public class PostService {
 		
 		//Colocar exception aqui findByIdAndCommentId
 		Post post = postRepository.findByIdAndCommentId(comentario.getId(), idPost);
-		
+		if(post == null){
+			log.error("Post nao existe ID: {}", idPost);
+			throw new PostException("Post nao existe.");
+		}
 		Comentario coment = post.getComentarios().get(0);
 		coment.setComentario(comentario.getComentario());
 		
@@ -101,6 +104,7 @@ public class PostService {
 		log.info("Buscando todos os posts...");
 		return postRepository.findAll();
 	}
-	
+
+
 	
 }

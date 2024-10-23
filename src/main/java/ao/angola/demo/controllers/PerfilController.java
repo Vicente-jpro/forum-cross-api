@@ -23,6 +23,9 @@ import ao.angola.demo.util.SelfLinkHateoas;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -70,7 +73,7 @@ public class PerfilController {
 	}
 	
 	
-	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping( path = "/user",  produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
 	public PerfilDTO findByUser(@LoggedInUser CurrentUser currentUser) {
 		Perfil perfil = this.perfilService.findByUser(currentUser.getUser());
@@ -81,7 +84,21 @@ public class PerfilController {
 		
 		return perfilResponseDto;
 	}
-	
-	
-	
+
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.OK)
+	public List<PerfilDTO> findAll() {
+
+		return this.perfilService.findAll()
+					.stream()
+				.map( perfil ->{
+					PerfilDTO perfilResponseDto = this.modelMapper.map(perfil, PerfilDTO.class);
+					return perfilResponseDto;
+				}).collect(Collectors.toList());
+
+	}
+
+
+
+
 }

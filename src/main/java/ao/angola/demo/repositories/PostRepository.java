@@ -18,9 +18,9 @@ public interface PostRepository extends JpaRepository<Post, Long>{
 			+ "	on users.id = p.user_id "
 			+ "	left join comentarios "
 			+ "	on comentarios.user_id = users.id "
-			+ " where comentarios.id = :idComentario and p.id = :idPost ", 
+			+ " where comentarios.id = :id_comentario and p.id = :id_post ",
 			nativeQuery = true)
-	Post findByIdAndCommentId( @Param("idComentario") Long idComentario, @Param("idPost")  Long idPost);
+	Post findByIdAndCommentId( @Param("id_comentario") Long idComentario, @Param("id_post")  Long idPost);
 	Post findByIdAndUser(Long idPost, UserModel user);
 	List<Post> findByApprovedTrue();
 	List<Post> findByApprovedFalse();

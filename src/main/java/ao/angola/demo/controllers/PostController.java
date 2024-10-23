@@ -3,6 +3,7 @@ package ao.angola.demo.controllers;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import ao.angola.demo.service.ComentarioService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -35,6 +36,7 @@ import lombok.RequiredArgsConstructor;
 public class PostController {
 
 	private final PostService postService;
+	private final ComentarioService comentarioService;
 	private final ModelMapper modelMapper;
 
 	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -151,7 +153,7 @@ public class PostController {
 	@PostMapping(value = "/{id_post}/comentarios", produces = MediaType.APPLICATION_JSON_VALUE, 
 			consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
-	public PostResponseDTO comentar(@RequestBody ComentarioDTO comentarioDTO, 
+	public PostResponseDTO comentar(@RequestBody @Valid ComentarioDTO comentarioDTO,
 			@PathVariable("id_post") Long idPost, @LoggedInUser CurrentUser currentUser){
 		
 		Comentario comentario = modelMapper.map(comentarioDTO, Comentario.class);
@@ -182,5 +184,15 @@ public class PostController {
 		return responseDTO;
 		
 	}
+
+
+	// Não foi testado
+	@DeleteMapping(value = "/{id_post}/comentarios/{id_comentario}")
+	@ResponseStatus(HttpStatus.CREATED)
+	public void eliminarCometario( @PathVariable("id_comentario") Long idComentario,
+											  @LoggedInUser CurrentUser currentUser){
+		comentarioService.eliminar(idComentario, currentUser.getUser());
+	}
+
 
 }

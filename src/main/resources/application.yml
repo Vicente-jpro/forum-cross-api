@@ -3,12 +3,12 @@ server:
   servlet:
     context-path: /api
 
-# Data base Connection
+# Database Connection
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/forum-cross-api
+    url: jdbc:postgresql://localhost:5432/forum_cross_api
     username: postgres
-    password: ${POSTGRES_VICENTE_PASSWORD}
+    password: vicente0301
     driver-class-name: org.postgresql.Driver
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect

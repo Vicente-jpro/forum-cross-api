@@ -1,6 +1,7 @@
 package ao.angola.demo.dto;
 
 
+import jakarta.validation.constraints.NotEmpty;
 import org.springframework.hateoas.RepresentationModel;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -18,19 +19,22 @@ public class PerfilDTO extends RepresentationModel<PerfilDTO>{
 
 	@JsonProperty("id")
 	private Long id;
-	
+
+	@NotEmpty(message = "Campo Morada1 deve existir.")
 	@JsonProperty("morada1")
 	private String morada1;
 	
 	@JsonProperty("morada2")
 	private String morada2;
-	
+
+	@NotEmpty(message = "Campo Telemóvel1 deve existir.")
 	@JsonProperty("telemovel1")
 	private String telemovel1;
 	
 	@JsonProperty("telemovel2")
 	private String telemovel2;
-	
+
+	@NotEmpty(message = "Campo Municipio deve existir.")
 	@JsonProperty("municipio")
 	private MunicipioDTO municipio;
 	

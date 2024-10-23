@@ -1,5 +1,6 @@
 package ao.angola.demo.service;
 
+import ao.angola.demo.entities.UserModel;
 import org.springframework.stereotype.Service;
 
 import ao.angola.demo.entities.Comentario;
@@ -15,10 +16,14 @@ public class ComentarioService {
 
 	private final ComentarioRepository comentarioRepository;
 	
-	public void eliminar(Long idPost, Long idComentario) {
+	public void eliminar(Long idComentario, UserModel user) {
 		log.info("Eliminado Comentario. {}", idComentario);
 		
-		Comentario comentario = findById(idComentario);
+		Comentario comentario = comentarioRepository.findByIdAndUser(idComentario, user);
+		if (comentario == null) {
+			log.info("Comentario nao foi encontrado: {}", idComentario);
+			throw new ComentarioException("Comentario nao foi no encontrado.");
+		}
 		comentarioRepository.delete(comentario);
 	}
 	
@@ -48,4 +53,17 @@ public class ComentarioService {
 		
 		return comentario;
 	}
+
+	public Comentario findByIdAndCommentId(Long idComentario, Long idPost) {
+		log.info("Buscando o comentario pelo ID: {}", idComentario);
+
+		Comentario comentario = this.comentarioRepository.findById(idComentario).get();
+		if(comentario == null) {
+			log.error("Comentario nao exite ID: {}", idComentario);
+			throw new ComentarioException("Comentario nao exite.");
+		}
+
+		return comentario;
+	}
+
 }

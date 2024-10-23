@@ -63,7 +63,7 @@ public class SecurityConfig extends GlobalMethodSecurityConfiguration{
                      .requestMatchers("/posts/**")
                         .hasAnyRole("USER", "ADMIN")
                      //.requestMatchers("/user/auth").permitAll()
-                     .requestMatchers(HttpMethod.POST, "/user/**")
+                     .requestMatchers(HttpMethod.POST, "/users/**")
                         .permitAll()
                      .anyRequest().authenticated()
 
