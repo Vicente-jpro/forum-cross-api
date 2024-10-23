@@ -1,10 +1,8 @@
 package ao.angola.demo.service;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import ao.angola.demo.entities.Comentario;
@@ -29,8 +27,8 @@ public class PostService {
 	}
 	
 	public Post atualizar(Post post, Long idPost) {
-		Post p = findById(idPost);
-		post.setId(idPost);
+		Post postSalvo = findById(idPost);
+		post.setId(postSalvo.getId());
 		return salvar(post);
 	}
 	
@@ -38,11 +36,12 @@ public class PostService {
 		log.info("Buscando Post...");
 		Post post = this.postRepository.findById(idPost).get();
 		
-		if (post == null ) {
-			log.error("Post nao existe ID: {}", idPost);
-			throw new PostException("Post nao existe.");
+		if (post != null ) {
+			return post;
 		}
-		return post;
+		
+		log.error("Post nao existe ID: {}", idPost);
+		throw new PostException("Post nao existe.");
 	}
 	
 	public Post findByIdAndUser(Long idPost, UserModel user) {

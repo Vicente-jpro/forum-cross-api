@@ -61,8 +61,8 @@ public class PerfilController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public PerfilDTO atualizar(@RequestBody PerfilDTO perfilRequestDTO, 
 			@PathVariable("id_perfil") Long idPerfil,
-			@LoggedInUser CurrentUser currentUser) {	
-		
+			@LoggedInUser CurrentUser currentUser) {
+		perfilRequestDTO.setId(idPerfil);
 		Perfil perfilSalvo = this.perfilService.atualizar(perfilRequestDTO, currentUser.getUser());
 		PerfilDTO perfilResponseDto = modelMapper.map(perfilSalvo, PerfilDTO.class);
 		
@@ -92,8 +92,8 @@ public class PerfilController {
 		return this.perfilService.findAll()
 					.stream()
 				.map( perfil ->{
-					PerfilDTO perfilResponseDto = this.modelMapper.map(perfil, PerfilDTO.class);
-					return perfilResponseDto;
+					PerfilDTO perfilDto = this.modelMapper.map(perfil, PerfilDTO.class);
+					return perfilDto;
 				}).collect(Collectors.toList());
 
 	}
