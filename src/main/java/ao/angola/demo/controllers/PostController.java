@@ -3,6 +3,7 @@ package ao.angola.demo.controllers;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import ao.angola.demo.enums.StatusAprovacao;
 import ao.angola.demo.service.ComentarioService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -47,7 +48,7 @@ public class PostController {
 		UserModel user = currentUser.getUser();
 
 		post.setUser(user);
-		post.setApproved(false);
+		post.setStatusAprovacao(StatusAprovacao.PENDENTE);
 		post.setVisible(true);
 
 		Post postSalvo = postService.salvar(post);
@@ -78,7 +79,7 @@ public class PostController {
 		return postResponseDTO;
 	}
 
-	@PatchMapping(value = "/approvation/{id_post}",
+	@PatchMapping(value = "/{id_post}/approvation",
 			produces = MediaType.APPLICATION_JSON_VALUE,
 			consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)

@@ -3,6 +3,7 @@ package ao.angola.demo.service;
 import java.util.Arrays;
 import java.util.List;
 
+import ao.angola.demo.enums.StatusAprovacao;
 import org.springframework.stereotype.Service;
 
 import ao.angola.demo.entities.Comentario;
@@ -42,7 +43,12 @@ public class PostService {
 	public Post atualizarAprovacao(Long idPost, UserModel user) {
 		log.info("Atualizando o estado do post...");
 		Post postSalvo = findByIdAndUser(idPost, user);
-		postSalvo.setApproved(!postSalvo.isApproved());
+
+		if(isAprovado(postSalvo)) {
+			postSalvo.setStatusAprovacao( StatusAprovacao.APROVADO);
+		}else {
+			postSalvo.setStatusAprovacao( StatusAprovacao.REPROVADO);
+		}
 		return salvar(postSalvo);
 	}
 
@@ -127,5 +133,8 @@ public class PostService {
 	}
 
 
+	private boolean isAprovado(Post post) {
+		return post.getStatusAprovacao() == StatusAprovacao.APROVADO;
+	}
 	
 }

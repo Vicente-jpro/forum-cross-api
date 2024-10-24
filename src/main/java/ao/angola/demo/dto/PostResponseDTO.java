@@ -3,6 +3,7 @@ package ao.angola.demo.dto;
 import java.util.ArrayList;
 import java.util.List;
 
+import ao.angola.demo.enums.StatusAprovacao;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
@@ -34,8 +35,8 @@ public class PostResponseDTO {
 
 
 	//@NotBlank(message = "Campo não pode estar vazio aprovação.")
-	@JsonProperty("approved")
-	private boolean approved;
+	@JsonProperty("status_aprovacao")
+	private StatusAprovacao statusAprovacao;
 	
 	@JsonProperty("user")
 	private UserResponseDTO user;

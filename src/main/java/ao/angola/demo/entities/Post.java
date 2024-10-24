@@ -3,23 +3,13 @@ package ao.angola.demo.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+import ao.angola.demo.enums.StatusAprovacao;
+import jakarta.persistence.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -42,9 +32,10 @@ public class Post {
 	
 	@Column(name = "descricao")
 	private String descricao;
-	
-	@Column(name = "approved")
-	private boolean approved;
+
+	@Column( name = "status_aprovacao")
+	@Enumerated(EnumType.STRING)
+	private StatusAprovacao statusAprovacao;
 
 	@Column(name = "visible")
 	private boolean visible;
