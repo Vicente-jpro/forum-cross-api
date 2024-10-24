@@ -2,6 +2,7 @@ package ao.angola.demo.repositories;
 
 import java.util.List;
 
+import ao.angola.demo.enums.StatusAprovacao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -22,6 +23,6 @@ public interface PostRepository extends JpaRepository<Post, Long>{
 			nativeQuery = true)
 	Post findByIdAndCommentId( @Param("id_comentario") Long idComentario, @Param("id_post")  Long idPost);
 	Post findByIdAndUser(Long idPost, UserModel user);
-	List<Post> findByApprovedTrue();
-	List<Post> findByApprovedFalse();
+	List<Post> findByStatusAprovacao(StatusAprovacao statusAprovacao);
+
 }

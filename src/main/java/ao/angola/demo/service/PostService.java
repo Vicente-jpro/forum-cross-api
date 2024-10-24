@@ -44,7 +44,7 @@ public class PostService {
 		log.info("Atualizando o estado do post...");
 		Post postSalvo = findByIdAndUser(idPost, user);
 
-		if(isAprovado(postSalvo)) {
+		if(!isAprovado(postSalvo)) {
 			postSalvo.setStatusAprovacao( StatusAprovacao.APROVADO);
 		}else {
 			postSalvo.setStatusAprovacao( StatusAprovacao.REPROVADO);
@@ -117,15 +117,11 @@ public class PostService {
 		this.postRepository.delete(p);
 	}
 	
-	public List<Post> findByApprovedTrue(){
+	public List<Post> findByStatusApprovation(StatusAprovacao statusAprovacao) {
 		log.info("Buscando todos os posts aprovados...");
-		return postRepository.findByApprovedTrue();
+		return postRepository.findByStatusAprovacao(statusAprovacao);
 	}
-	
-	public List<Post> findByApprovedFalse(){
-		log.info("Buscando todos os posts nao aprovados...");
-		return postRepository.findByApprovedFalse();
-	}
+
 	
 	public List<Post> findAll(){
 		log.info("Buscando todos os posts...");

@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonPropertyOrder({"id", "titulo", "descricao", "approved", "visible", "user", "comentarios"})
+@JsonPropertyOrder({"id", "titulo", "descricao", "status_aprovacao", "visible", "user", "comentarios"})
 public class PostResponseDTO {
 
 	@JsonProperty("id")

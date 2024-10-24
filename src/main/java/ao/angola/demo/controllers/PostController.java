@@ -8,15 +8,7 @@ import ao.angola.demo.service.ComentarioService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import ao.angola.demo.dto.ComentarioDTO;
 import ao.angola.demo.dto.PostDTO;
@@ -95,7 +87,7 @@ public class PostController {
 		return postResponseDTO;
 	}
 
-	@PatchMapping(value = "/visibility/{id_post}",
+	@PatchMapping(value = "/{id_post}/visibility",
 			produces = MediaType.APPLICATION_JSON_VALUE,
 			consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
@@ -157,11 +149,11 @@ public class PostController {
 	}
 	
 	
-	@GetMapping("/approved")
+	@GetMapping("/approvation")
 	@ResponseStatus(HttpStatus.OK)
-	public List<PostResponseDTO> findByApprovedTrue(){
-		
-		return postService.findByApprovedTrue()
+	public List<PostResponseDTO> findByStatusApprovation(@RequestParam("status") String status){
+		StatusAprovacao statusAprovacao = StatusAprovacao.valueOf(status);
+		return postService.findByStatusApprovation(statusAprovacao)
 				  .stream()
 				  .map(post -> {
 					 
@@ -172,19 +164,7 @@ public class PostController {
 
 	}
 	
-	@GetMapping("/unapproved")
-	@ResponseStatus(HttpStatus.OK)
-	public List<PostResponseDTO> findByApprovedFalse(){
-		return postService.findByApprovedFalse()
-		  .stream()
-		  .map(post -> {
-	
-			  PostResponseDTO postResponseDTO = 
-					  modelMapper.map(post, PostResponseDTO.class);
-			  return postResponseDTO;
-		  }).collect(Collectors.toList());
 
-	}
 	
 	@PostMapping(value = "/{id_post}/comentarios", produces = MediaType.APPLICATION_JSON_VALUE, 
 			consumes = MediaType.APPLICATION_JSON_VALUE)
