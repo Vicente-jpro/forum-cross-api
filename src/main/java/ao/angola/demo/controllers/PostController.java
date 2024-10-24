@@ -48,6 +48,8 @@ public class PostController {
 
 		post.setUser(user);
 		post.setApproved(false);
+		post.setVisible(true);
+
 		Post postSalvo = postService.salvar(post);
 
 		postDTO.setId(post.getId());
@@ -57,6 +59,9 @@ public class PostController {
 		return postResponseDTO;
 	}
 
+
+
+
 	@PatchMapping(value = "/{id_post}", produces = MediaType.APPLICATION_JSON_VALUE, 
 			consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
@@ -64,17 +69,47 @@ public class PostController {
 			@LoggedInUser CurrentUser currentUser) {
 
 		UserModel user = currentUser.getUser();
-		Post post = postService.findByIdAndUser(idPost, user);
-		
+
+		postDTO.setId(idPost);
 		Post novoPost = modelMapper.map(postDTO, Post.class);
-		novoPost.setId(post.getId());
-		novoPost.setUser(user);
-		
-		Post postAtualizado = this.postService.atualizar(novoPost, idPost);		
+		Post postAtualizado = this.postService.atualizar(novoPost, user);
 		PostResponseDTO postResponseDTO = modelMapper.map(postAtualizado, PostResponseDTO.class);
 	
 		return postResponseDTO;
 	}
+
+	@PatchMapping(value = "/approvation/{id_post}",
+			produces = MediaType.APPLICATION_JSON_VALUE,
+			consumes = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.OK)
+	public PostResponseDTO changeApprovation(
+							 @PathVariable("id_post") Long idPost,
+							 @LoggedInUser CurrentUser currentUser) {
+
+		UserModel user = currentUser.getUser();
+		Post post = postService.atualizarAprovacao(idPost, user);
+
+		PostResponseDTO postResponseDTO = modelMapper.map(post, PostResponseDTO.class);
+
+		return postResponseDTO;
+	}
+
+	@PatchMapping(value = "/visibility/{id_post}",
+			produces = MediaType.APPLICATION_JSON_VALUE,
+			consumes = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.OK)
+	public PostResponseDTO changeVisibitlity(
+			@PathVariable("id_post") Long idPost,
+			@LoggedInUser CurrentUser currentUser) {
+
+		UserModel user = currentUser.getUser();
+		Post post = postService.atualizarVisibilidade(idPost, user);
+
+		PostResponseDTO postResponseDTO = modelMapper.map(post, PostResponseDTO.class);
+
+		return postResponseDTO;
+	}
+
 
 	@GetMapping(value = "/{id_post}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)

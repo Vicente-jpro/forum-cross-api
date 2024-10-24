@@ -45,6 +45,9 @@ public class Post {
 	
 	@Column(name = "approved")
 	private boolean approved;
+
+	@Column(name = "visible")
+	private boolean visible;
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id")

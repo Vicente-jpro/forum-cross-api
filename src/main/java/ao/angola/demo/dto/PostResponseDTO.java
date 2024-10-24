@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import ao.angola.demo.entities.Comentario;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonPropertyOrder({"id", "titulo", "descricao", "approved", "user", "comentarios"})
+@JsonPropertyOrder({"id", "titulo", "descricao", "approved", "visible", "user", "comentarios"})
 public class PostResponseDTO {
 
 	@JsonProperty("id")
@@ -27,16 +28,21 @@ public class PostResponseDTO {
 	@JsonProperty("titulo")
 	private String titulo;
 
-	@NotBlank(message = "Campo titulo descricao.")
+	@NotBlank(message = "Campo não pode estar vazio descricao.")
 	@JsonProperty("descricao")
 	private String descricao;
-	
+
+
+	//@NotBlank(message = "Campo não pode estar vazio aprovação.")
 	@JsonProperty("approved")
 	private boolean approved;
 	
 	@JsonProperty("user")
 	private UserResponseDTO user;
-	
+
+	@JsonProperty("visible")
+	private boolean visible;
+
 	@JsonProperty("comentarios")
 	private List<ComentarioDTO> comentarios = new ArrayList<ComentarioDTO>();
 }

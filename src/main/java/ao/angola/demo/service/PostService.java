@@ -23,15 +23,37 @@ public class PostService {
 	
 	public Post salvar(Post post) {
 		log.info("Salvando Post...");
-		return this.postRepository.save(post);
+		try {
+			return this.postRepository.save(post);
+		} catch (Exception e) {
+			log.info("Erro ao salvar post. Escolhe outro titulo.");
+			throw new PostException("Erro ao salvar post. Escolhe outro titulo já existe");
+		}
 	}
 	
-	public Post atualizar(Post post, Long idPost) {
-		Post postSalvo = findById(idPost);
+	public Post atualizar(Post post, UserModel user) {
+		log.info("Atualizando o post...");
+		Post postSalvo = findByIdAndUser(post.getId(), user);
 		post.setId(postSalvo.getId());
 		return salvar(post);
 	}
-	
+
+
+	public Post atualizarAprovacao(Long idPost, UserModel user) {
+		log.info("Atualizando o estado do post...");
+		Post postSalvo = findByIdAndUser(idPost, user);
+		postSalvo.setApproved(!postSalvo.isApproved());
+		return salvar(postSalvo);
+	}
+
+	public Post atualizarVisibilidade(Long idPost, UserModel user) {
+		log.info("Atualizando o estado do post...");
+		Post postSalvo = findByIdAndUser(idPost, user);
+		postSalvo.setVisible(!postSalvo.isVisible());
+		return salvar(postSalvo);
+	}
+
+
 	public Post findById(Long idPost) {
 		log.info("Buscando Post...");
 		Post post = this.postRepository.findById(idPost).get();
@@ -39,7 +61,7 @@ public class PostService {
 		if (post != null ) {
 			return post;
 		}
-		
+
 		log.error("Post nao existe ID: {}", idPost);
 		throw new PostException("Post nao existe.");
 	}
