@@ -19,6 +19,8 @@ import ao.angola.demo.repositories.UsuarioRepository;
 import ao.angola.demo.util.CurrentUser;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.List;
+
 @Slf4j
 @Service
 public class UsuarioServiceImpl implements UserDetailsService {
@@ -46,7 +48,7 @@ public class UsuarioServiceImpl implements UserDetailsService {
     	
     }
 
-    public UserDetails autenticar( UserModel usuario ){
+    public UserDetails autenticar( UserModel usuario ) throws SenhaInvalidaException{
     	log.info("Authenticating the user..."); 
         UserDetails user = loadUserByUsername(usuario.getEmail());
         
@@ -134,6 +136,10 @@ public class UsuarioServiceImpl implements UserDetailsService {
         } else {
             return null;
         }
+    }
+
+    public List<UserModel> findAllProfiles(){
+        return usuarioRepository.findAllProfiles();
     }
 
 }

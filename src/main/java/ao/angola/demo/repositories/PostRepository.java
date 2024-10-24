@@ -13,11 +13,11 @@ import ao.angola.demo.entities.UserModel;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long>{
 	
-	@Query(value = "select users.id as id_user, comentarios.id as id_comentario, p.* from posts p"
+	@Query(value = "select * from posts p"
 			+ "	inner join users "
-			+ "	on users.id = p.user_id "
+			+ "	on users.id_user = p.user_id "
 			+ "	left join comentarios "
-			+ "	on comentarios.user_id = users.id "
+			+ "	on comentarios.id_user = users.id "
 			+ " where comentarios.id = :id_comentario and p.id = :id_post ",
 			nativeQuery = true)
 	Post findByIdAndCommentId( @Param("id_comentario") Long idComentario, @Param("id_post")  Long idPost);

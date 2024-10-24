@@ -29,7 +29,7 @@ public class Provincia implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id @GeneratedValue(strategy =  GenerationType.IDENTITY)
-	@Column( name = "id")
+	@Column( name = "id_provincia")
 	private Long id;
 	
 	@Column( name = "nome_provincia", length = 50, unique = true)

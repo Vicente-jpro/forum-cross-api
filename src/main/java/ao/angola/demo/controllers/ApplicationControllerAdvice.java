@@ -3,6 +3,7 @@ package ao.angola.demo.controllers;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import ao.angola.demo.exceptions.SenhaInvalidaException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -20,6 +21,13 @@ public class ApplicationControllerAdvice {
     @ExceptionHandler(PostException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiErrors handlePostException(PostException ex){
+        String mensagemErro = ex.getMessage();
+        return new ApiErrors(mensagemErro);
+    }
+
+    @ExceptionHandler(SenhaInvalidaException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ApiErrors handleSenhaInvalidaException(SenhaInvalidaException ex){
         String mensagemErro = ex.getMessage();
         return new ApiErrors(mensagemErro);
     }

@@ -1,13 +1,6 @@
 package ao.angola.demo.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class Perfil {
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
+	@Column(name = "id_perfil")
 	private Long id;
 	
 	@Column(name = "morada1", length = 100)
@@ -39,7 +32,7 @@ public class Perfil {
 	@JoinColumn(name = "municipio_id")
 	private Municipio municipio;
 	
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name = "user_id", unique = true, updatable = true)
 	private UserModel user;
 	

@@ -50,7 +50,7 @@ public class PostService {
 		log.info("Atualizando o estado do post...");
 		Post postSalvo = findByIdAndUser(idPost, user);
 		postSalvo.setVisible(!postSalvo.isVisible());
-		return salvar(postSalvo);///
+		return salvar(postSalvo);
 	}
 
 
