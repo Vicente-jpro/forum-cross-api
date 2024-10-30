@@ -22,33 +22,33 @@ public class ApplicationControllerAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiErrors handlePostException(PostException ex){
         String mensagemErro = ex.getMessage();
-        return new ApiErrors(mensagemErro);
+        return new ApiErrors(mensagemErro, 3333);
     }
 
     @ExceptionHandler(SenhaInvalidaException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public ApiErrors handleSenhaInvalidaException(SenhaInvalidaException ex){
         String mensagemErro = ex.getMessage();
-        return new ApiErrors(mensagemErro);
+        return new ApiErrors(mensagemErro, 3333);
     }
 
     @ExceptionHandler(UsuarioException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ApiErrors handleUsuarioException( UsuarioException ex ){
-        return new ApiErrors(ex.getMessage());
+        return new ApiErrors(ex.getMessage(), 3333);
     }
     
     @ExceptionHandler(ComentarioException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ApiErrors handleComentarioException( ComentarioException ex ){
-        return new ApiErrors(ex.getMessage());
+        return new ApiErrors(ex.getMessage(), 3333);
     }
     
     @ExceptionHandler(NumberFormatException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiErrors handlePessoaException(NumberFormatException ex){
         String mensagemErro = "Invalid URI "+ex.getMessage();
-        return new ApiErrors(mensagemErro);
+        return new ApiErrors(mensagemErro, 3333);
     }
     
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -58,6 +58,6 @@ public class ApplicationControllerAdvice {
                 .stream()
                 .map(erro -> erro.getDefaultMessage())
                 .collect(Collectors.toList());
-        return new ApiErrors(errors);
+        return new ApiErrors(errors, 3333);
     }
 }
