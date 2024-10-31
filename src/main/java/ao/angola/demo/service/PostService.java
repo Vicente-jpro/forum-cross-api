@@ -3,6 +3,7 @@ package ao.angola.demo.service;
 import java.util.Arrays;
 import java.util.List;
 
+import ao.angola.demo.controllers.ApplicationControllerAdvice;
 import ao.angola.demo.enums.StatusAprovacao;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +29,7 @@ public class PostService {
 			return this.postRepository.save(post);
 		} catch (Exception e) {
 			log.info("Erro ao salvar post. Escolhe outro titulo.");
-			throw new PostException("Erro ao salvar post. Escolhe outro titulo já existe");
+			throw new PostException("Erro ao salvar post. Escolhe outro titulo já existe", 4567);
 		}
 	}
 	
